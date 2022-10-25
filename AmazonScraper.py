@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
-# from selenium.webdriver.chrome.options import Options
 from selenium import webdriver
+from webdriver_manager.firefox import GeckoDriverManager
 # import pickle
 # import numpy as np
 
@@ -48,15 +48,13 @@ def extract_record(single_item):
 
 def main(search_term, numofpages):
     output = [["ASIN", "Price", "Rating", "Link"]]
-    driver = webdriver.Firefox()
+    driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
     driver.minimize_window()
     driver.get("https://www.amazon.com/")
-    load_cookie(driver, "amazon.txt")
     url = get_url(search_term)
     for i in range(numofpages):
         prices = []
         asins = []
-        total = 0
         driver.get(url)
         soup = BeautifulSoup(driver.page_source, "html.parser")  # retrieve and parse HTML text.
         url_addition = soup.find(class_="s-pagination-item s-pagination-next s-pagination-button s-pagination-separator").get("href")
