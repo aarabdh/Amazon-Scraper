@@ -1,4 +1,4 @@
-import AmazonScraper2 as AmazonScraper
+import AmazonScraper
 import csv
 import os
 import easygui
